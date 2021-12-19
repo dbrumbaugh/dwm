@@ -28,6 +28,22 @@ static char *colors[][3] = {
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
  };
 
+/* scratchpads setup */
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+
+const char *spcmd1[] = {"st", "-n", "spcalc", "-g", "144x41", "-e", "calc", NULL };
+const char *spcmd2[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd3[] = {"st", "-n", "spnvim", "-g", "144x41", "-e", "nvim", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spcalc",    spcmd1},
+	{"spterm",    spcmd2},
+	{"spnvim",    spcmd3},
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -36,12 +52,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      "st",     NULL,		   0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class     instance  		title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     		NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox", NULL,     		NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "St",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      "st",     		NULL,		   	0,         0,          1,           0,        -1 },
+	{ NULL,      NULL,     		"Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
+	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
+	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -109,6 +128,7 @@ ResourcePref resources[] = {
 		{ "mfact",      	 	FLOAT,   &mfact },
 };
 
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -116,8 +136,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_equal,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_minus,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
@@ -164,6 +184,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+
+	/* Application Launching Hotkeys */
+	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
+	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,            			XK_i,	   togglescratch,  {.ui = 2 } },
 };
 
 /* button definitions */
@@ -176,7 +201,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
