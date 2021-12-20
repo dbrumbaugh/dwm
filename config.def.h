@@ -111,7 +111,7 @@ static const char *termcmd[]  = { "st", NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "font",               STRING,  &font },
+		//{ "font",               STRING,  &font },
 		{ "dmenufont",          STRING,  &dmenufont },
 		{ "normbgcolor",        STRING,  &normbgcolor },
 		{ "normbordercolor",    STRING,  &normbordercolor },
@@ -188,13 +188,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
-<<<<<<< HEAD
 	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_i,	   togglescratch,  {.ui = 2 } },
-=======
-	//{MODKEY 						XK_c       }
->>>>>>> f3f6afbccfcef9630b05234006f933b47ce7ee89
 };
 
 /* button definitions */
