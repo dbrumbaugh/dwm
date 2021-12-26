@@ -185,7 +185,7 @@ ResourcePref resources[] = {
         { "color15",             STRING,  &termcol15},
 };
 
-
+#include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -246,6 +246,36 @@ static Key keys[] = {
 	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_i,	   togglescratch,  {.ui = 2 } },
+
+
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
+	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
+	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("mpc play") },
+	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
+	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
+	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
+	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("st -e ncmpcpp") },
+	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
+	{ 0, XF86XK_Calculator,		spawn,		SHCMD("st -e bc -l") },
+	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
+	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
+	{ 0, XF86XK_DOS,		spawn,		SHCMD("st") },
+	{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+	{ 0, XF86XK_TaskPane,		spawn,		SHCMD("st -e htop") },
+	{ 0, XF86XK_Mail,		spawn,		SHCMD("st -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ 0, XF86XK_MyComputer,		spawn,		SHCMD("st -e lf /") },
+	/* { 0, XF86XK_Battery,		spawn,		SHCMD("") }, */
+	{ 0, XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
+	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0, XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
+	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 15") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 15") },
 };
 
 /* button definitions */
