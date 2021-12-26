@@ -13,8 +13,8 @@ static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char font[]            = "monospace:size=16";
-static char dmenufont[]       = "monospace:size=16";
+static char font[]            = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
+static char dmenufont[]       = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
 static char statusfont[]      = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
 
 static const char *fonts[]          = { font, statusfont };
@@ -152,7 +152,8 @@ static const char *termcmd[]  = { "st", NULL };
  */
 ResourcePref resources[] = {
 		//{ "font",               STRING,  &font },
-		{ "dmenufont",          STRING,  &dmenufont },
+		//{ "dmenufont",          STRING,  &dmenufont },
+
 		{ "normbgcolor",        STRING,  &normbgcolor },
 		{ "normbordercolor",    STRING,  &normbordercolor },
 		{ "normfgcolor",        STRING,  &normfgcolor },
