@@ -264,7 +264,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD("st -e bc -l") },
-	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
+	{ 0, XF86XK_Sleep,		spawn,		SHCMD("slock systemctl sleep -i") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
 	{ 0, XF86XK_DOS,		spawn,		SHCMD("st") },
 	{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
