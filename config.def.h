@@ -247,7 +247,9 @@ static Key keys[] = {
 	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_i,	   togglescratch,  {.ui = 2 } },
 
+    {MODKEY,                             XK_Escape, spawn,   SHCMD("slock")},
 
+    /* XF86 Media Keybindings */
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
