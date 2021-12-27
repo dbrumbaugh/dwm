@@ -186,6 +186,7 @@ ResourcePref resources[] = {
 };
 
 #include <X11/XF86keysym.h>
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -198,6 +199,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 
 	/*
 	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
@@ -264,7 +267,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD("st -e bc -l") },
-	{ 0, XF86XK_Sleep,		spawn,		SHCMD("slock systemctl sleep -i") },
+	{ 0, XF86XK_Sleep,		spawn,		SHCMD("systemctl suspend") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
 	{ 0, XF86XK_DOS,		spawn,		SHCMD("st") },
 	{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
