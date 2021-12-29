@@ -13,9 +13,9 @@ static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char font[]            = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
-static char dmenufont[]       = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
-static char statusfont[]      = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=18";
+static char font[]            = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=16";
+static char dmenufont[]       = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=16";
+static char statusfont[]      = "FiraCode Nerd Font:style=medium:antialias=true:pixelsize=16";
 
 static const char *fonts[]          = { font, statusfont };
 static const int statusfontindex = 1;
@@ -72,9 +72,9 @@ typedef struct {
 	const void *cmd;
 } Sp;
 
-const char *spcmd1[] = {"st", "-n", "spcalc", "-g", "144x41", "-e", "calc", NULL };
-const char *spcmd2[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd3[] = {"st", "-n", "spnvim", "-g", "144x41", "-e", "nvim", NULL };
+const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
+const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
+const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spcalc",    spcmd1},
@@ -91,10 +91,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  		title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     		NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     		NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      "st",     		NULL,		   	0,         0,          1,           0,        -1 },
+	{ "Kitty",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      "kitty",     		NULL,		   	0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     		"Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
 	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
@@ -145,7 +143,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -202,6 +200,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 
+
 	/*
 	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
@@ -224,8 +223,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -246,11 +245,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
-	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			XK_i,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
+	{ MODKEY,            			XK_F11,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,            			XK_F12,	   togglescratch,  {.ui = 1 } },
+    { MODKEY,                       XK_Escape, spawn,           SHCMD("slock")},
+    { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
+    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty -e neomutt")},
+    { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty -e newsboat")},
 
-    {MODKEY,                             XK_Escape, spawn,   SHCMD("slock")},
+
 
     /* XF86 Media Keybindings */
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -263,17 +266,17 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
-	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("st -e ncmpcpp") },
+	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("kitty -e ncmpcpp") },
 	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
-	{ 0, XF86XK_Calculator,		spawn,		SHCMD("st -e bc -l") },
+	{ 0, XF86XK_Calculator,		spawn,		SHCMD("kitty -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("systemctl suspend") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
-	{ 0, XF86XK_DOS,		spawn,		SHCMD("st") },
+	{ 0, XF86XK_DOS,		spawn,		SHCMD("kitty") },
 	{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
-	{ 0, XF86XK_TaskPane,		spawn,		SHCMD("st -e htop") },
-	{ 0, XF86XK_Mail,		spawn,		SHCMD("st -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-	{ 0, XF86XK_MyComputer,		spawn,		SHCMD("st -e lf /") },
+	{ 0, XF86XK_TaskPane,		spawn,		SHCMD("kitty -e htop") },
+	{ 0, XF86XK_Mail,		spawn,		SHCMD("kitty -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ 0, XF86XK_MyComputer,		spawn,		SHCMD("kitty -e lf /") },
 	/* { 0, XF86XK_Battery,		spawn,		SHCMD("") }, */
 	{ 0, XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
 	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
