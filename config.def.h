@@ -75,11 +75,13 @@ typedef struct {
 const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
 const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
 const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
+const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "pulsemixer", NULL};
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spcalc",    spcmd1},
 	{"spterm",    spcmd2},
 	{"spnvim",    spcmd3},
+    {"spmixer",   spcmd4},
 };
 
 /* tagging */
@@ -97,6 +99,7 @@ static const Rule rules[] = {
 	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
 	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
 	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
+	{ NULL,		 "spmixer",		NULL,			SPTAG(3),  1,		   1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -245,13 +248,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
+	{ MODKEY,            			XK_F9,     togglescratch,  {.ui = 3 } },
 	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_F11,	   togglescratch,  {.ui = 2 } },
 	{ MODKEY,            			XK_F12,	   togglescratch,  {.ui = 1 } },
     { MODKEY,                       XK_Escape, spawn,           SHCMD("slock")},
     { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
-    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty -e neomutt")},
-    { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty -e newsboat")},
+    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
+    { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
 
 
 
