@@ -76,12 +76,14 @@ const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
 const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
 const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
 const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "pulsemixer", NULL};
+const char *spcmd5[] = {"kitty", "--name", "spmusic", "-e", "ncmpcpp", NULL};
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spcalc",    spcmd1},
 	{"spterm",    spcmd2},
 	{"spnvim",    spcmd3},
     {"spmixer",   spcmd4},
+    {"spmusic", spcmd5},
 };
 
 /* tagging */
@@ -100,6 +102,7 @@ static const Rule rules[] = {
 	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
 	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
 	{ NULL,		 "spmixer",		NULL,			SPTAG(3),  1,		   1,           0,        -1 },
+	{ NULL,		 "spmusic",		NULL,			SPTAG(4),  1,		   1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -192,7 +195,6 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_equal,      incnmaster,     {.i = +1 } },
@@ -203,31 +205,27 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 
-
-	/*
-	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_6,      incrihgaps,     {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_7,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_8,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_9,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	*/
+    { MODKEY,                       XK_z,      spawn,          SHCMD("mpc prev")  },
+    { MODKEY,                       XK_x,      spawn,          SHCMD("mpc toggle")  },
+    { MODKEY,                       XK_c,      spawn,          SHCMD("mpc next")  },
+    { MODKEY,                       XK_v,      incrgaps,       {.i = +3}  },
+    { MODKEY,                       XK_b,      incrgaps,       {.i = -3}  },
+    { MODKEY,                       XK_n,      defaultgaps,    {0}  },
+    { MODKEY,                       XK_m,      togglegaps,     {0}  },
 
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+
 	{ MODKEY,                       XK_q,      killclient,     {0} },
+    { MODKEY,                       XK_w,      togglebar,       {0}  },
+    //{ MODKEY,                       XK_e,      <stuff>         {}  },
+    //{ MODKEY,                       XK_r,      <stuff>         {}  },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+    //{ MODKEY,                       XK_i,      <stuff>         {}  },
+    //{ MODKEY,                       XK_o,      <stuff>         {}  },
+    //{ MODKEY,                       XK_p,      <stuff>         {}  },
+
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -248,6 +246,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
+	{ MODKEY,            			XK_F8,     togglescratch,  {.ui = 4 } },
 	{ MODKEY,            			XK_F9,     togglescratch,  {.ui = 3 } },
 	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_F11,	   togglescratch,  {.ui = 2 } },
