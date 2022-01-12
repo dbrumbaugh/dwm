@@ -4,3 +4,4 @@ dwm
 *.orig
 *.rej
 *.diff
+.ccls*
