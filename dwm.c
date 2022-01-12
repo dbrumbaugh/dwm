@@ -575,6 +575,7 @@ buttonpress(XEvent *e)
         } else
 			click = ClkWinTitle;
 	} else if ((c = wintoclient(ev->window))) {
+        arg.ui = c->tags;
 		focus(c);
 		restack(selmon);
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
@@ -583,7 +584,7 @@ buttonpress(XEvent *e)
 	for (i = 0; i < LENGTH(buttons); i++)
 		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
 		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
-			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+			buttons[i].func((click == ClkTagBar || click == ClkClientWin) && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
 }
 
 void
