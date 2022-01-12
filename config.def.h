@@ -197,8 +197,8 @@ static Key keys[] = {
 	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_equal,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_minus,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_equal,  incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_minus,  incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
@@ -216,13 +216,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-    { MODKEY,                       XK_w,      togglebar,       {0}  },
+    { MODKEY,                       XK_w,      togglebar,      {0}  },
     //{ MODKEY,                       XK_e,      <stuff>         {}  },
     //{ MODKEY,                       XK_r,      <stuff>         {}  },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-    //{ MODKEY,                       XK_i,      <stuff>         {}  },
+	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
     //{ MODKEY,                       XK_o,      <stuff>         {}  },
     //{ MODKEY,                       XK_p,      <stuff>         {}  },
 
@@ -246,17 +246,21 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
+    { MODKEY,                       XK_Escape, spawn,           SHCMD("slock")},
+    { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
+    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
+    { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
+    { MODKEY,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
+    { MODKEY,                       XK_F5,     spawn,           SHCMD("")},
+    { MODKEY,                       XK_F6,     spawn,           SHCMD("")},
+    { MODKEY,                       XK_F7,     spawn,           SHCMD("")},
 	{ MODKEY,            			XK_F8,     togglescratch,  {.ui = 4 } },
 	{ MODKEY,            			XK_F9,     togglescratch,  {.ui = 3 } },
 	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_F11,	   togglescratch,  {.ui = 2 } },
 	{ MODKEY,            			XK_F12,	   togglescratch,  {.ui = 1 } },
-    { MODKEY,                       XK_Escape, spawn,           SHCMD("slock")},
-    { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
-    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
-    { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
 
-
+    // TODO: Figure out how to reference printscreen and pause keys
 
     /* XF86 Media Keybindings */
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -265,7 +269,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
-	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("mpc play") },
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("mpc toggle") },
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
@@ -301,7 +305,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
