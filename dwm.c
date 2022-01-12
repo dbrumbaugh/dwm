@@ -2451,8 +2451,10 @@ view(const Arg *arg)
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 
-		if (arg->ui == ~0)
+		if (arg->ui == ~0) {
 			selmon->pertag->curtag = 0;
+            selmon->tagset[selmon->seltags] ^= SPTAGMASK;
+        }
 		else {
 			for (i = 0; !(arg->ui & 1 << i); i++) ;
 			selmon->pertag->curtag = i + 1;
