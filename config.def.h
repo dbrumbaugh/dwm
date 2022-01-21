@@ -98,6 +98,7 @@ static const Rule rules[] = {
 	{ "Kitty",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      "kitty",     		NULL,		   	0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     		"Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	{ NULL,      NULL,     		"zoom",                0,  1,          0,           0,        -1 }, /* xev */
 	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
 	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
 	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
