@@ -4,8 +4,6 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 
 Tasks to Complete
 -----------------
-1. Update the status bar on all monitors, even if not active, rather
-   than only on the active monitor.
 2. Pulling up Tag 0 automatically switches to grid-view
 3. Pulling up Tag 0 operates on all monitors, not just the active one.
    Leaving Tag 0 on one monitor leaves it on all of them
