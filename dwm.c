@@ -973,22 +973,20 @@ drawbar(Monitor *m)
 		return;
 
 	/* draw status first so it can be overdrawn by tags later */
-	if (m == selmon || 1) { /* status is only drawn on selected monitor */
-        char *text, *s, ch;
-		x = 0;
-		for (text = s = stext; *s; s++) {
-			if ((unsigned char)(*s) < ' ') {
-				ch = *s;
-				*s = '\0';
-                tw = m->ww - drawstatusbar(m, bh, stext);
-				x += tw;
-				*s = ch;
-				text = s + 1;
-			}
+    char *text, *s, ch;
+    x = 0;
+    for (text = s = stext; *s; s++) {
+        if ((unsigned char)(*s) < ' ') {
+            ch = *s;
+            *s = '\0';
+            tw = m->ww - drawstatusbar(m, bh, stext);
+            x += tw;
+            *s = ch;
+            text = s + 1;
         }
+    }
 
-        tw = m->ww - drawstatusbar(m, bh, stext);
-	}
+    tw = m->ww - drawstatusbar(m, bh, stext);
 
 	for (c = m->clients; c; c = c->next) {
 		occ |= c->tags;
@@ -1059,7 +1057,7 @@ expose(XEvent *e)
 	XExposeEvent *ev = &e->xexpose;
 
 	if (ev->count == 0 && (m = wintomon(ev->window)))
-		drawbar(m);
+        drawbars();
 }
 
 void
@@ -1548,7 +1546,7 @@ propertynotify(XEvent *e)
 		if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName]) {
 			updatetitle(c);
 			if (c == c->mon->sel)
-				drawbar(c->mon);
+                drawbars();
 		}
 		if (ev->atom == netatom[NetWMWindowType])
 			updatewindowtype(c);
@@ -1662,7 +1660,7 @@ restack(Monitor *m)
 	XEvent ev;
 	XWindowChanges wc;
 
-	drawbar(m);
+    drawbars();
 	if (!m->sel)
 		return;
 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
@@ -1819,7 +1817,7 @@ setlayout(const Arg *arg)
 	if (selmon->sel)
 		arrange(selmon);
 	else
-		drawbar(selmon);
+        drawbars();
 }
 
 /* arg > 1.0 will set mfact absolutely */
@@ -2396,7 +2394,7 @@ updatestatus(void)
 
 	}
     for(m=mons; m; m = m->next)
-        drawbar(selmon);
+        drawbars();
 }
 
 void
