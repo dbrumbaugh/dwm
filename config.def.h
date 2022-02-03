@@ -77,6 +77,8 @@ const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
 const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
 const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "pulsemixer", NULL};
 const char *spcmd5[] = {"kitty", "--name", "spmusic", "-e", "ncmpcpp", NULL};
+const char *spcmd6[] = {"kitty", "--name", "sptop", "-e", "htop", NULL};
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spcalc",    spcmd1},
@@ -84,6 +86,7 @@ static Sp scratchpads[] = {
 	{"spnvim",    spcmd3},
     {"spmixer",   spcmd4},
     {"spmusic", spcmd5},
+    {"sptop", spcmd6},
 };
 
 /* tagging */
@@ -104,6 +107,7 @@ static const Rule rules[] = {
 	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
 	{ NULL,		 "spmixer",		NULL,			SPTAG(3),  1,		   1,           0,        -1 },
 	{ NULL,		 "spmusic",		NULL,			SPTAG(4),  1,		   1,           0,        -1 },
+	{ NULL,		 "sptop",		NULL,			SPTAG(5),  1,		   1,           0,        -1 },
 };
 
 /* layout(s) */
@@ -254,7 +258,7 @@ static Key keys[] = {
     { MODKEY,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
     { MODKEY,                       XK_F5,     spawn,           SHCMD("kitty weechat")},
     { MODKEY,                       XK_F6,     spawn,           SHCMD("")},
-    { MODKEY,                       XK_F7,     spawn,           SHCMD("")},
+	{ MODKEY,            			XK_F7,     togglescratch,  {.ui = 5 } },
 	{ MODKEY,            			XK_F8,     togglescratch,  {.ui = 4 } },
 	{ MODKEY,            			XK_F9,     togglescratch,  {.ui = 3 } },
 	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
