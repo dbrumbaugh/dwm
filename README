@@ -2,6 +2,25 @@ dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
 
+Tasks to Complete
+-----------------
+1. Update the status bar on all monitors, even if not active, rather
+   than only on the active monitor.
+2. Pulling up Tag 0 automatically switches to grid-view
+3. Pulling up Tag 0 operates on all monitors, not just the active one.
+   Leaving Tag 0 on one monitor leaves it on all of them
+4. Clean rebuild. There are surely some patches that I applied
+   but do not use. Rebuilding from the ground up would result in
+   a cleaner code-base.
+5. Update the man-page to reflect usage.
+6. Update Makefile to suppress common warnings (like unused functions)
+7. Keybinding to suppress screenlocker, with possible statusbar icon
+
+Long-term Goals
+---------------
+* Centralize code across the suckless utilities that I use,
+  do I really need two XRBD implementations, two font-rendering
+  implementations, etc., for dwm and dmenu?
 
 Requirements
 ------------
