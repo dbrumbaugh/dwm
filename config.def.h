@@ -251,7 +251,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
-    { MODKEY,                       XK_Escape, spawn,           SHCMD("slock")},
+    { MODKEY,                       XK_Escape, spawn,           SHCMD("lock")},
     { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
     { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
     { MODKEY,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
