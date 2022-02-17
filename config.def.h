@@ -229,7 +229,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
-    //{ MODKEY,                       XK_p,      <stuff>         {}  },
+    { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
 
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -251,6 +251,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
 
 	/* Application Launching Hotkeys */
+    { MODKEY|ShiftMask,             XK_Escape, spawn,           SHCMD("toggle-lock")},
     { MODKEY,                       XK_Escape, spawn,           SHCMD("lock")},
     { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
     { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
