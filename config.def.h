@@ -198,7 +198,7 @@ ResourcePref resources[] = {
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_slash,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -222,14 +222,23 @@ static Key keys[] = {
 
 	{ MODKEY,                       XK_q,      killclient,     {0} },
     { MODKEY,                       XK_w,      togglebar,      {0}  },
-    //{ MODKEY,                       XK_e,      <stuff>         {}  },
-    //{ MODKEY,                       XK_r,      <stuff>         {}  },
+    { MODKEY,                       XK_e,      spawn,          SHCMD("launch-webcam")  },
+    { MODKEY,                       XK_r,      spawn,          SHCMD("screencast")  },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
     { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
+
+    { MODKEY,                       XK_a,      spawn,          SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY,                       XK_s,      spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY,                       XK_d,      spawn,          SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)")  },
+
+
+    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("pamixer --default-source -d 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("pamixer --default-source -t; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("pamixer --default-source -i 3; kill -44 $(pidof dwmblocks)")  },
 
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
