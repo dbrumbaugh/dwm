@@ -198,46 +198,34 @@ ResourcePref resources[] = {
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_equal,  incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_minus,  incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
-
-    { MODKEY,                       XK_z,      spawn,          SHCMD("mpc prev")  },
-    { MODKEY,                       XK_x,      spawn,          SHCMD("mpc toggle")  },
-    { MODKEY,                       XK_c,      spawn,          SHCMD("mpc next")  },
-    { MODKEY,                       XK_v,      incrgaps,       {.i = +3}  },
-    { MODKEY,                       XK_b,      incrgaps,       {.i = -3}  },
-    { MODKEY,                       XK_n,      defaultgaps,    {0}  },
-    { MODKEY,                       XK_m,      togglegaps,     {0}  },
-
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-
-	{ MODKEY,                       XK_q,      killclient,     {0} },
-    { MODKEY,                       XK_w,      togglebar,      {0}  },
-    //{ MODKEY,                       XK_e,      <stuff>         {}  },
-    //{ MODKEY,                       XK_r,      <stuff>         {}  },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
-    { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
-
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
+
+	//{ MODKEY,    		            XK_Home, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_Prior, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_Next, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_End, spawn,          {.v = termcmd } },
+
+	//{ MODKEY|ShiftMask,    		            XK_Home, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_Prior, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_Next, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_End, spawn,          {.v = termcmd } },
+
+
+	//{ MODKEY,    		            XK_Left, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_Right, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_Up, spawn,          {.v = termcmd } },
+	//{ MODKEY,    		            XK_Down, spawn,          {.v = termcmd } },
+
+	//{ MODKEY|ShiftMask,    		            XK_Left, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_Right, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_Up, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,    		            XK_Down, spawn,          {.v = termcmd } },
+
+
+    /* 1 - 0 */
+	//{ MODKEY,                       XK_grave,      view,           {.ui = ~0 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -247,11 +235,105 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
+	{ MODKEY,                       XK_equal,       incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_minus,       incnmaster,     {.i = -1 } },
+	//{ MODKEY,                     XK_BackSpace,   <stuff>,        {} },
 
-	/* Application Launching Hotkeys */
-    { MODKEY|ShiftMask,             XK_Escape, spawn,           SHCMD("toggle-lock")},
+    /* Shift with 1 - 0 */
+	//{ MODKEY|ShiftMask,           XK_grave,       <stuff>,           {} },
+	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
+	//{ MODKEY|ShiftMask,           XK_equal,       <stuff>,     {} },
+	//{ MODKEY|ShiftMask,           XK_minus,       <stuff>,     {} },
+	//{ MODKEY|ShiftMask,           XK_BackSpace,   <stuff>,     {} },
+
+
+    /* Q - P */
+	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
+    { MODKEY,                       XK_w,      togglebar,      {0}  },
+    //{ MODKEY,                     XK_e,      <stuff>         {} }, // I plan to use these two for recording
+    //{ MODKEY,                     XK_r,      <stuff>         {} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
+    { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
+    //{ MODKEY,                     XK_bracketleft,     <stuff>,          {} },
+    //{ MODKEY,                     XK_bracketright,    <stuff>,          {} },
+    //{ MODKEY,                     XK_backslash,       <stuff>,          {} },
+
+    /* Shift with Q - P */
+    //{ MODKEY|ShiftMask,           XK_Tab,    <stuff>,      {} },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+    //{ MODKEY|ShiftMask,           XK_w,      <stuff>,      {} },
+    //{ MODKEY|ShiftMask,           XK_e,      <stuff>       {} },
+	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+	//{ MODKEY|ShiftMask,           XK_t,      <stuff>,      {} },
+	//{ MODKEY|ShiftMask,           XK_y,      <stuff>,      {} },
+	//{ MODKEY|ShiftMask,           XK_u,      <stuff>,      {} },
+	//{ MODKEY|ShiftMask,           XK_i,      <stuff>,      {} },
+	//{ MODKEY|ShiftMask,           XK_o,      <stuff>,      {} },
+    //{ MODKEY|ShiftMask,           XK_p,      <stuff>,      {} },
+    //{ MODKEY|ShiftMask,           XK_bracketleft,   <stuff>,     {} },
+    //{ MODKEY|ShiftMask,           XK_bracketright,  <stuff>,     {} },
+    //{ MODKEY|ShiftMask,           XK_backslash,     <stuff>,     {} },
+    
+
+    /* A - L */
+    //{ MODKEY,                     XK_a,      <stuff>         {} },
+    //{ MODKEY,                     XK_s,      <stuff>         {} },
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+    //{ MODKEY,                     XK_f,      <stuff>         {} },
+    //{ MODKEY,                     XK_g,      <stuff>         {} },
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	//{ MODKEY,                     XK_semicolon,      <stuff>,       {} },
+	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
+
+    /* Shift with A - L */
+    //{ MODKEY|ShiftMask,           XK_a,      <stuff>         {} },
+    //{ MODKEY|ShiftMask,           XK_s,      <stuff>         {} },
+    //{ MODKEY|ShiftMask,           XK_d,      <stuff>         {} },
+    //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
+    //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
+    //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+    //{ MODKEY|ShiftMask,           XK_l,      <stuff>         {} },
+	//{ MODKEY|ShiftMask,           XK_semicolon,      <stuff>,       {} },
+	//{ MODKEY|ShiftMask,           XK_apostrophe,     <stuff>,       {} },
+
+
+    /* Z - M */
+    { MODKEY,                       XK_z,      spawn,          SHCMD("mpc prev")  },
+    { MODKEY,                       XK_x,      spawn,          SHCMD("mpc toggle")  },
+    { MODKEY,                       XK_c,      spawn,          SHCMD("mpc next")  },
+    { MODKEY,                       XK_v,      incrgaps,       {.i = +3}  },
+    { MODKEY,                       XK_b,      incrgaps,       {.i = -3}  },
+    { MODKEY,                       XK_n,      defaultgaps,    {0}  },
+    { MODKEY,                       XK_m,      togglegaps,     {0}  },
+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	//{ MODKEY,                     XK_slash, focusmon,       {.i = +1 } },
+
+    /* Shift with Z - M */
+    //{ MODKEY|ShiftMask,                       XK_z,      spawn,          SHCMD("mpc prev")  },
+    //{ MODKEY|ShiftMask,                       XK_x,      spawn,          SHCMD("mpc toggle")  },
+    //{ MODKEY|ShiftMask,                       XK_c,      spawn,          SHCMD("mpc next")  },
+    //{ MODKEY|ShiftMask,                       XK_v,      incrgaps,       {.i = +3}  },
+    //{ MODKEY|ShiftMask,                       XK_b,      incrgaps,       {.i = -3}  },
+    //{ MODKEY|ShiftMask,                       XK_n,      defaultgaps,    {0}  },
+    //{ MODKEY|ShiftMask,                       XK_m,      togglegaps,     {0}  },
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	//{ MODKEY|ShiftMask,                       XK_slash, focusmon,       {.i = +1 } },
+
+
+    /* Function Keys */
     { MODKEY,                       XK_Escape, spawn,           SHCMD("lock")},
     { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
     { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
@@ -265,6 +347,24 @@ static Key keys[] = {
 	{ MODKEY,            			XK_F10,    togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_F11,	   togglescratch,  {.ui = 2 } },
 	{ MODKEY,            			XK_F12,	   togglescratch,  {.ui = 1 } },
+	//{ MODKEY,            			XK_Delete,	   togglescratch,  {.ui = 1 } },
+
+    /* Shift with Function Keys */
+    { MODKEY|ShiftMask,             XK_Escape, spawn,           SHCMD("toggle-lock")},
+    //{ MODKEY|ShiftMask,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
+    //{ MODKEY|ShiftMask,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
+    //{ MODKEY|ShiftMask,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
+    //{ MODKEY|ShiftMask,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
+    //{ MODKEY|ShiftMask,                       XK_F5,     spawn,           SHCMD("kitty weechat")},
+    //{ MODKEY|ShiftMask,                       XK_F6,     spawn,           SHCMD("")},
+	//{ MODKEY|ShiftMask,            			XK_F7,     togglescratch,  {.ui = 5 } },
+	//{ MODKEY|ShiftMask,            			XK_F8,     togglescratch,  {.ui = 4 } },
+	//{ MODKEY|ShiftMask,            			XK_F9,     togglescratch,  {.ui = 3 } },
+	//{ MODKEY|ShiftMask,            			XK_F10,    togglescratch,  {.ui = 0 } },
+	//{ MODKEY|ShiftMask,            			XK_F11,	   togglescratch,  {.ui = 2 } },
+	//{ MODKEY|ShiftMask,            			XK_F12,	   togglescratch,  {.ui = 1 } },
+	//{ MODKEY|ShiftMask,            			XK_Delete,	   togglescratch,  {.ui = 1 } },
+
 
     // TODO: Figure out how to reference printscreen and pause keys
 
