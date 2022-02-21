@@ -207,10 +207,10 @@ static Key keys[] = {
 	//{ MODKEY,    		            XK_Next, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_End, spawn,          {.v = termcmd } },
 
-	//{ MODKEY|ShiftMask,    		            XK_Home, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_Prior, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_Next, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_End, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Home, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Prior, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Next, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_End, spawn,          {.v = termcmd } },
 
 
 	//{ MODKEY,    		            XK_Left, spawn,          {.v = termcmd } },
@@ -218,14 +218,14 @@ static Key keys[] = {
 	//{ MODKEY,    		            XK_Up, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_Down, spawn,          {.v = termcmd } },
 
-	//{ MODKEY|ShiftMask,    		            XK_Left, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_Right, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_Up, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,    		            XK_Down, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Left, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Right, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Up, spawn,          {.v = termcmd } },
+	//{ MODKEY|ShiftMask,           XK_Down, spawn,          {.v = termcmd } },
 
 
     /* 1 - 0 */
-	//{ MODKEY,                       XK_grave,      view,           {.ui = ~0 } },
+	//{ MODKEY,                     XK_grave,      view,           {.ui = ~0 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -252,8 +252,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
     { MODKEY,                       XK_w,      togglebar,      {0}  },
-    //{ MODKEY,                     XK_e,      <stuff>         {} }, // I plan to use these two for recording
-    //{ MODKEY,                     XK_r,      <stuff>         {} },
+    { MODKEY,                       XK_e,      spawn,          SHCMD("launch-webcam")  },
+    { MODKEY,                       XK_r,      spawn,          SHCMD("screencast")  },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
@@ -282,9 +282,9 @@ static Key keys[] = {
     
 
     /* A - L */
-    //{ MODKEY,                     XK_a,      <stuff>         {} },
-    //{ MODKEY,                     XK_s,      <stuff>         {} },
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+    { MODKEY,                       XK_a,      spawn,          SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY,                       XK_s,      spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY,                       XK_d,      spawn,          SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)")  },
     //{ MODKEY,                     XK_f,      <stuff>         {} },
     //{ MODKEY,                     XK_g,      <stuff>         {} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -295,9 +295,9 @@ static Key keys[] = {
 	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
 
     /* Shift with A - L */
-    //{ MODKEY|ShiftMask,           XK_a,      <stuff>         {} },
-    //{ MODKEY|ShiftMask,           XK_s,      <stuff>         {} },
-    //{ MODKEY|ShiftMask,           XK_d,      <stuff>         {} },
+    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("pamixer --default-source -d 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("pamixer --default-source -t; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("pamixer --default-source -i 3; kill -44 $(pidof dwmblocks)")  },
     //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
@@ -318,7 +318,7 @@ static Key keys[] = {
     { MODKEY,                       XK_m,      togglegaps,     {0}  },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	//{ MODKEY,                     XK_slash, focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_slash,      spawn,          {.v = dmenucmd } },
 
     /* Shift with Z - M */
     //{ MODKEY|ShiftMask,                       XK_z,      spawn,          SHCMD("mpc prev")  },
