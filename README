@@ -12,7 +12,6 @@ Tasks to Complete
    a cleaner code-base.
 5. Update the man-page to reflect usage.
 6. Update Makefile to suppress common warnings (like unused functions)
-7. Keybinding to suppress screenlocker, with possible statusbar icon
 
 Long-term Goals
 ---------------
