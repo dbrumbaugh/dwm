@@ -241,7 +241,9 @@ static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
+#ifndef __OpenBSD__
 static void sigstatusbar(const Arg *arg);
+#endif
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
@@ -1967,6 +1969,7 @@ sigterm(int unused)
 	quit(&a);
 }
 
+#ifndef __OpenBSD__
 void
 sigstatusbar(const Arg *arg)
 {
@@ -1980,6 +1983,7 @@ sigstatusbar(const Arg *arg)
 
 	sigqueue(statuspid, SIGRTMIN+statussig, sv);
 }
+#endif
 
 void
 spawn(const Arg *arg)

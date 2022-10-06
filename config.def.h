@@ -282,9 +282,9 @@ static Key keys[] = {
     
 
     /* A - L */
-    { MODKEY,                       XK_a,      spawn,          SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)")  },
-    { MODKEY,                       XK_s,      spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)")  },
-    { MODKEY,                       XK_d,      spawn,          SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY,                       XK_a,      spawn,          SHCMD("sndioctl output.level=+.05")  },
+    { MODKEY,                       XK_s,      spawn,          SHCMD("sndioctl output.mute=!")  },
+    { MODKEY,                       XK_d,      spawn,          SHCMD("sndioctl output.level=-.05")  },
     //{ MODKEY,                     XK_f,      <stuff>         {} },
     //{ MODKEY,                     XK_g,      <stuff>         {} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -295,9 +295,9 @@ static Key keys[] = {
 	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
 
     /* Shift with A - L */
-    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("pamixer --default-source -d 3; kill -44 $(pidof dwmblocks)")  },
-    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("pamixer --default-source -t; kill -44 $(pidof dwmblocks)")  },
-    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("pamixer --default-source -i 3; kill -44 $(pidof dwmblocks)")  },
+    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("sndioctl input.level=+.05")  },
+    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("sndioctl input.mute=!")  },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("sndioctl input.level=-.05")  },
     //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
@@ -406,9 +406,11 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+#ifndef __OpenBSD__
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+#endif
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
