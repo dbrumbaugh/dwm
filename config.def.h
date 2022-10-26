@@ -148,7 +148,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "sh", "-c", cmd, NULL } }
 
 #define STATUSBAR "dwmblocks"
 
@@ -195,6 +195,8 @@ ResourcePref resources[] = {
         { "color15",             STRING,  &termcol15},
 };
 
+static const char *vpn_launch[] = { "vpn-connect", "ARGUMENTS", NULL};
+
 #include <X11/XF86keysym.h>
 #include "movestack.c"
 static Key keys[] = {
@@ -203,7 +205,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
 
-	//{ MODKEY,    		            XK_Home, spawn,          {.v = termcmd } },
+	{ 0,    		                XK_Print,  spawn,          SHCMD("maim -sl -c .27,.5214,.5333,.8 ~/pictures/screenshots/$(date +%s).png") },
+	{ 0|ShiftMask,                  XK_Print,  spawn,          SHCMD("maim ~/pictures/screenshots/$(date +%s).png") },
+
+	{ MODKEY,    		            XK_Home, spawn,            {.v = vpn_launch} },
 	//{ MODKEY,    		            XK_Prior, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_Next, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_End, spawn,          {.v = termcmd } },
@@ -322,16 +327,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_slash,      spawn,          {.v = dmenucmd } },
 
     /* Shift with Z - M */
-    //{ MODKEY|ShiftMask,                       XK_z,      spawn,          SHCMD("mpc prev")  },
-    //{ MODKEY|ShiftMask,                       XK_x,      spawn,          SHCMD("mpc toggle")  },
-    //{ MODKEY|ShiftMask,                       XK_c,      spawn,          SHCMD("mpc next")  },
-    //{ MODKEY|ShiftMask,                       XK_v,      incrgaps,       {.i = +3}  },
-    //{ MODKEY|ShiftMask,                       XK_b,      incrgaps,       {.i = -3}  },
-    //{ MODKEY|ShiftMask,                       XK_n,      defaultgaps,    {0}  },
-    //{ MODKEY|ShiftMask,                       XK_m,      togglegaps,     {0}  },
+    //{ MODKEY|ShiftMask,           XK_z,      spawn,          SHCMD("mpc prev")  },
+    //{ MODKEY|ShiftMask,           XK_x,      spawn,          SHCMD("mpc toggle")  },
+    //{ MODKEY|ShiftMask,           XK_c,      spawn,          SHCMD("mpc next")  },
+    //{ MODKEY|ShiftMask,           XK_v,      spawn,       SHCMD("vpn-connect")  },
+    //{ MODKEY|ShiftMask,           XK_b,      incrgaps,       {.i = -3}  },
+    //{ MODKEY|ShiftMask,           XK_n,      defaultgaps,    {0}  },
+    //{ MODKEY|ShiftMask,           XK_m,      togglegaps,     {0}  },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	//{ MODKEY|ShiftMask,                       XK_slash, focusmon,       {.i = +1 } },
+	//{ MODKEY|ShiftMask,           XK_slash, focusmon,       {.i = +1 } },
 
 
     /* Function Keys */
