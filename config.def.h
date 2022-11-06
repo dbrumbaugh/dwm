@@ -108,6 +108,7 @@ static const Rule rules[] = {
 	{ NULL,		 "spmixer",		NULL,			SPTAG(3),  1,		   1,           0,        -1 },
 	{ NULL,		 "spmusic",		NULL,			SPTAG(4),  1,		   1,           0,        -1 },
 	{ NULL,		 "sptop",		NULL,			SPTAG(5),  1,		   1,           0,        -1 },
+    { NULL,      NULL,          "Gnuplot Window", 0,       0,          0,           1,        -1 },
 };
 
 /* layout(s) */
