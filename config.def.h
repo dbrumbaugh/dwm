@@ -75,7 +75,7 @@ typedef struct {
 const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
 const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
 const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
-const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "pulsemixer", NULL};
+const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "cmixer", NULL};
 const char *spcmd5[] = {"kitty", "--name", "spmusic", "-e", "ncmpcpp", NULL};
 const char *spcmd6[] = {"kitty", "--name", "sptop", "-e", "htop", NULL};
 
@@ -215,7 +215,7 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,           XK_Home, spawn,          {.v = termcmd } },
 	//{ MODKEY|ShiftMask,           XK_Prior, spawn,          {.v = termcmd } },
 	//{ MODKEY|ShiftMask,           XK_Next, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,           XK_End, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,           XK_End, spawn,          SHCMD("poweroff")},
 
 
 	//{ MODKEY,    		            XK_Left, spawn,          {.v = termcmd } },
@@ -287,22 +287,22 @@ static Key keys[] = {
     
 
     /* A - L */
-    { MODKEY,                       XK_a,      spawn,          SHCMD("sndioctl output.level=+.05")  },
+    { MODKEY,                       XK_a,      spawn,          SHCMD("sndioctl output.level=-.05")  },
     { MODKEY,                       XK_s,      spawn,          SHCMD("sndioctl output.mute=!")  },
-    { MODKEY,                       XK_d,      spawn,          SHCMD("sndioctl output.level=-.05")  },
+    { MODKEY,                       XK_d,      spawn,          SHCMD("sndioctl output.level=+.05")  },
     //{ MODKEY,                     XK_f,      <stuff>         {} },
     //{ MODKEY,                     XK_g,      <stuff>         {} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	//{ MODKEY,                     XK_semicolon,      <stuff>,       {} },
+	{ MODKEY,                       XK_semicolon,     spawn,   SHCMD("passmenu") },
 	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
 
     /* Shift with A - L */
-    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("sndioctl input.level=+.05")  },
+    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("sndioctl input.level=-.05")  },
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("sndioctl input.mute=!")  },
-    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("sndioctl input.level=-.05")  },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("sndioctl input.level=+.05")  },
     //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
@@ -371,9 +371,8 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,            			XK_Delete,	   togglescratch,  {.ui = 1 } },
 
 
-    // TODO: Figure out how to reference printscreen and pause keys
-
     /* XF86 Media Keybindings */
+    /*
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
@@ -395,13 +394,14 @@ static Key keys[] = {
 	{ 0, XF86XK_TaskPane,		spawn,		SHCMD("kitty -e htop") },
 	{ 0, XF86XK_Mail,		spawn,		SHCMD("kitty -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ 0, XF86XK_MyComputer,		spawn,		SHCMD("kitty -e lf /") },
-	/* { 0, XF86XK_Battery,		spawn,		SHCMD("") }, */
+	 { 0, XF86XK_Battery,		spawn,		SHCMD("") }, 
 	{ 0, XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
 	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 5") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 5") },
+    */
 };
 
 /* button definitions */
