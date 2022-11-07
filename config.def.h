@@ -216,7 +216,7 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,           XK_Home, spawn,          {.v = termcmd } },
 	//{ MODKEY|ShiftMask,           XK_Prior, spawn,          {.v = termcmd } },
 	//{ MODKEY|ShiftMask,           XK_Next, spawn,          {.v = termcmd } },
-	//{ MODKEY|ShiftMask,           XK_End, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,           XK_End, spawn,          SHCMD("poweroff")},
 
 
 	//{ MODKEY,    		            XK_Left, spawn,          {.v = termcmd } },
@@ -297,7 +297,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	//{ MODKEY,                     XK_semicolon,      <stuff>,       {} },
+	{ MODKEY,                       XK_semicolon,     spawn,   SHCMD("passmenu") },
 	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
 
     /* Shift with A - L */
@@ -372,9 +372,8 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,            			XK_Delete,	   togglescratch,  {.ui = 1 } },
 
 
-    // TODO: Figure out how to reference printscreen and pause keys
-
     /* XF86 Media Keybindings */
+    /*
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
@@ -396,13 +395,14 @@ static Key keys[] = {
 	{ 0, XF86XK_TaskPane,		spawn,		SHCMD("kitty -e htop") },
 	{ 0, XF86XK_Mail,		spawn,		SHCMD("kitty -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ 0, XF86XK_MyComputer,		spawn,		SHCMD("kitty -e lf /") },
-	/* { 0, XF86XK_Battery,		spawn,		SHCMD("") }, */
+	 { 0, XF86XK_Battery,		spawn,		SHCMD("") }, 
 	{ 0, XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
 	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 5") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 5") },
+    */
 };
 
 /* button definitions */
