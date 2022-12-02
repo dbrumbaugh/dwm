@@ -291,8 +291,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	//{ MODKEY,                     XK_semicolon,      <stuff>,       {} },
-	//{ MODKEY,                     XK_apostrophe,     <stuff>,       {} },
+	{ MODKEY,                     XK_semicolon,      spawn,       SHCMD("passmenu")},
+	{ MODKEY,                     XK_apostrophe,     spawn,       SHCMD("search") },
 
     /* Shift with A - L */
     { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("pamixer --default-source -d 3; kill -44 $(pidof dwmblocks)")  },
@@ -305,7 +305,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
     //{ MODKEY|ShiftMask,           XK_l,      <stuff>         {} },
 	//{ MODKEY|ShiftMask,           XK_semicolon,      <stuff>,       {} },
-	//{ MODKEY|ShiftMask,           XK_apostrophe,     <stuff>,       {} },
+	{ MODKEY|ShiftMask,           XK_apostrophe,     spawn,       SHCMD("search --selection") },
 
 
     /* Z - M */
@@ -337,7 +337,7 @@ static Key keys[] = {
     { MODKEY,                       XK_Escape, spawn,           SHCMD("lock")},
     { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
     { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
-    { MODKEY,                       XK_F3,     spawn,           SHCMD("pkill newsboat; kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
+    { MODKEY,                       XK_F3,     spawn,           SHCMD("pkill newsboat; kitty newsboat -u /export/home/dbr4/.local/share/feeds -c /export/home/dbr4/.cache/newsboat/cache -C /export/home/dbr4/.config/newsboat/config")},
     { MODKEY,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
     { MODKEY,                       XK_F5,     spawn,           SHCMD("kitty weechat")},
     { MODKEY,                       XK_F6,     spawn,           SHCMD("")},
