@@ -2453,6 +2453,11 @@ view(const Arg *arg)
 		if (arg->ui == ~0) {
 			selmon->pertag->curtag = 0;
             selmon->tagset[selmon->seltags] ^= SPTAGMASK;
+            // Force set the layout to grid when viewing
+            // all tags
+            Arg tmp;
+            tmp.v = &layouts[7];
+            setlayout(&tmp);
         }
 		else {
 			for (i = 0; !(arg->ui & 1 << i); i++) ;
