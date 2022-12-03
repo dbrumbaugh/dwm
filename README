@@ -4,14 +4,11 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 
 Tasks to Complete
 -----------------
-2. Pulling up Tag 0 automatically switches to grid-view
-3. Pulling up Tag 0 operates on all monitors, not just the active one.
-   Leaving Tag 0 on one monitor leaves it on all of them
-4. Clean rebuild. There are surely some patches that I applied
+1. Clean rebuild. There are surely some patches that I applied
    but do not use. Rebuilding from the ground up would result in
    a cleaner code-base.
-5. Update the man-page to reflect usage.
-6. Update Makefile to suppress common warnings (like unused functions)
+2. Update the man-page to reflect usage.
+3. Update Makefile to suppress common warnings (like unused functions)
 
 Long-term Goals
 ---------------
