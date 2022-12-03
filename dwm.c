@@ -973,16 +973,15 @@ drawbar(Monitor *m)
 		return;
 
 	/* draw status first so it can be overdrawn by tags later */
-    char *text, *s, ch;
+    char *s, ch;
     x = 0;
-    for (text = s = stext; *s; s++) {
+    for (s = stext; *s; s++) {
         if ((unsigned char)(*s) < ' ') {
             ch = *s;
             *s = '\0';
             tw = m->ww - drawstatusbar(m, bh, stext);
             x += tw;
             *s = ch;
-            text = s + 1;
         }
     }
 
@@ -1160,7 +1159,10 @@ getstatusbarpid()
 	if (statuspid > 0) {
 		snprintf(buf, sizeof(buf), "/proc/%u/cmdline", statuspid);
 		if ((fp = fopen(buf, "r"))) {
-			fgets(buf, sizeof(buf), fp);
+			if(fgets(buf, sizeof(buf), fp) == NULL && ferror(fp)) {
+                perror("get_statusbarpid:");
+                die("fgets");
+            }
 			while ((c = strchr(str, '/')))
 				str = c + 1;
 			fclose(fp);
@@ -1170,7 +1172,12 @@ getstatusbarpid()
 	}
 	if (!(fp = popen("pidof -s "STATUSBAR, "r")))
 		return -1;
-	fgets(buf, sizeof(buf), fp);
+
+	if(fgets(buf, sizeof(buf), fp) == NULL && ferror(fp)) {
+        perror("get_statusbarpid:");
+        die("fgets");
+    }
+
 	pclose(fp);
 	return strtol(buf, NULL, 10);
 }
@@ -2548,7 +2555,10 @@ getparentprocess(pid_t p)
 	if (!(f = fopen(buf, "r")))
 		return 0;
 
-	fscanf(f, "%*u %*s %*c %u", &v);
+	if (fscanf(f, "%*u %*s %*c %u", &v) == EOF && ferror(f)) {
+        perror("getparentprocess");
+        die("fscanf");
+    }
 	fclose(f);
 #endif /* __linux__*/
 
