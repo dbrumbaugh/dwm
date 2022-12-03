@@ -2451,26 +2451,31 @@ view(const Arg *arg)
 	int i;
 	unsigned int tmptag;
 
+    static int x = 1;
+
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
 
 
-    if (selmon->pertag->curtag == 0 && arg->ui != 0) {
-        Monitor *oldmon = selmon;
+    if (selmon->pertag->curtag == 0 && x) {
+        x = 0;
         for (Monitor *m = mons; m; m = m->next) {
-            if (m != oldmon) {
-                selmon = m;
-                Arg tmp = {0};
-                view(&tmp);
-            }
-        }
+            Arg marg = {.i = 1};
+            focusmon(&marg);
 
-        selmon = oldmon;
+            Arg tmp;
+            if (selmon->pertag->prevtag == 0) {
+                tmp.ui = ~0;
+            } else {
+                tmp.ui = 1 << (selmon->pertag->prevtag - 1);
+            }
+            view(&tmp);
+        }
+        x = 1;
     }
 
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
-
 		if (arg->ui == ~0) {
             view_t0(arg);
         }
@@ -2502,9 +2507,10 @@ view(const Arg *arg)
 void
 view_t0(const Arg *arg) 
 {
-    Monitor *oldmon = selmon;
     for (Monitor *m = mons; m; m = m->next) {
-        selmon = m;
+        Arg marg = {.i = 1};
+        focusmon(&marg);
+
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
         selmon->pertag->curtag = 0;
@@ -2515,8 +2521,6 @@ view_t0(const Arg *arg)
         tmp.v = &layouts[7];
         setlayout(&tmp);
     }
-
-    selmon = oldmon;
 }
 
 pid_t
