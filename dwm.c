@@ -266,6 +266,7 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
+static void view_t0(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -2452,21 +2453,30 @@ view(const Arg *arg)
 
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
+
+
+    if (selmon->pertag->curtag == 0 && arg->ui != 0) {
+        Monitor *oldmon = selmon;
+        for (Monitor *m = mons; m; m = m->next) {
+            if (m != oldmon) {
+                selmon = m;
+                Arg tmp = {0};
+                view(&tmp);
+            }
+        }
+
+        selmon = oldmon;
+    }
+
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
-		selmon->pertag->prevtag = selmon->pertag->curtag;
 
 		if (arg->ui == ~0) {
-			selmon->pertag->curtag = 0;
-            selmon->tagset[selmon->seltags] ^= SPTAGMASK;
-            // Force set the layout to grid when viewing
-            // all tags
-            Arg tmp;
-            tmp.v = &layouts[7];
-            setlayout(&tmp);
+            view_t0(arg);
         }
 		else {
+            selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+            selmon->pertag->prevtag = selmon->pertag->curtag;
 			for (i = 0; !(arg->ui & 1 << i); i++) ;
 			selmon->pertag->curtag = i + 1;
 		}
@@ -2487,6 +2497,26 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
+}
+
+void
+view_t0(const Arg *arg) 
+{
+    Monitor *oldmon = selmon;
+    for (Monitor *m = mons; m; m = m->next) {
+        selmon = m;
+		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+		selmon->pertag->prevtag = selmon->pertag->curtag;
+        selmon->pertag->curtag = 0;
+        selmon->tagset[selmon->seltags] ^= SPTAGMASK;
+        // Force set the layout to grid when viewing
+        // all tags
+        Arg tmp;
+        tmp.v = &layouts[7];
+        setlayout(&tmp);
+    }
+
+    selmon = oldmon;
 }
 
 pid_t
