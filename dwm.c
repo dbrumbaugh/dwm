@@ -267,6 +267,8 @@ static void updatestatus(void);
 static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
+
+static void t0_view(const Arg *arg);
 static void view(const Arg *arg);
 static void view_t0(const Arg *arg);
 static Client *wintoclient(Window w);
@@ -2439,6 +2441,15 @@ updatewmhints(Client *c)
 			c->neverfocus = 0;
 		XFree(wmh);
 	}
+}
+
+
+void
+t0_view(const Arg *arg) 
+{
+    if (selmon->pertag->curtag == 0) {
+        view(arg);
+    }
 }
 
 void
