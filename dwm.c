@@ -976,16 +976,15 @@ drawbar(Monitor *m)
 		return;
 
 	/* draw status first so it can be overdrawn by tags later */
-    char *text, *s, ch;
+    char *s, ch;
     x = 0;
-    for (text = s = stext; *s; s++) {
+    for (s = stext; *s; s++) {
         if ((unsigned char)(*s) < ' ') {
             ch = *s;
             *s = '\0';
             tw = m->ww - drawstatusbar(m, bh, stext);
             x += tw;
             *s = ch;
-            text = s + 1;
         }
     }
 
