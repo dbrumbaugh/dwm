@@ -265,8 +265,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
     { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
-    //{ MODKEY,                     XK_bracketleft,     <stuff>,          {} },
     //{ MODKEY,                     XK_bracketright,    <stuff>,          {} },
+    { MODKEY,                     XK_bracketleft,     spawn,          SHCMD("kitty search -y") },
     //{ MODKEY,                     XK_backslash,       <stuff>,          {} },
 
     /* Shift with Q - P */
@@ -281,8 +281,8 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,           XK_i,      <stuff>,      {} },
 	//{ MODKEY|ShiftMask,           XK_o,      <stuff>,      {} },
     //{ MODKEY|ShiftMask,           XK_p,      <stuff>,      {} },
-    //{ MODKEY|ShiftMask,           XK_bracketleft,   <stuff>,     {} },
     //{ MODKEY|ShiftMask,           XK_bracketright,  <stuff>,     {} },
+    { MODKEY|ShiftMask,           XK_bracketleft,   spawn,     SHCMD("kitty search -y t") },
     //{ MODKEY|ShiftMask,           XK_backslash,     <stuff>,     {} },
     
 
