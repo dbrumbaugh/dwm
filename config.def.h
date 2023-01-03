@@ -72,12 +72,12 @@ typedef struct {
 	const void *cmd;
 } Sp;
 
-const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
-const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
-const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
-const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "cmixer", NULL};
-const char *spcmd5[] = {"kitty", "--name", "spmusic", "-e", "ncmpcpp", NULL};
-const char *spcmd6[] = {"kitty", "--name", "sptop", "-e", "htop", NULL};
+const char *spcmd1[] = {"st", "-n", "spcalc", "-e", "calc", NULL };
+const char *spcmd2[] = {"st", "-n", "spterm",  NULL };
+const char *spcmd3[] = {"st", "-n", "spnvim", "-e", "nvim", NULL };
+const char *spcmd4[] = {"st", "-n", "spmixer", "-e", "cmixer", NULL};
+const char *spcmd5[] = {"st", "-n", "spmusic", "-e", "ncmpcpp", NULL};
+const char *spcmd6[] = {"st", "-n", "sptop", "-e", "htop", NULL};
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -98,8 +98,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  		title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Kitty",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      "kitty",     		NULL,		   	0,         0,          1,           0,        -1 },
+	{ "St",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      "st",     		NULL,		   	0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     		"Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ NULL,      NULL,     		"zoom",                0,  1,          0,           0,        -1 }, /* xev */
 	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
@@ -154,7 +154,25 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "kitty", NULL };
+static const char *termcmd[]  = { "tabbed", "-c", "-n", "tabbed_st", "-r", "2", "st", "-w", "''", NULL}; //"''", "-e", "tmux", "-u", NULL };
+static const char *termcmd_tmux[]  = { "tabbed", "-c", "-n", "tabbed_st", "-r", "2", "st", "-w", "''", "-e", "tmux", "-u", NULL };
+
+static const char *browsercmd1[] = {"tabbed", "-c", "vimb", "-e", NULL};
+static const char *browsercmd2[] = {"qutebrowser", NULL};
+
+static const char *vpncmd1[] = { "vpn-connect", NULL};
+
+static const char *screenshotcmd1[] = {"maim", "-sl",  "-c",  ".27,.5214,.5333,.8",  "~/pictures/screenshots/$(date +%s).png", NULL};
+static const char *screenshotcmd2[] = {"maim", "~/pictures/screenshots/$(date +%s).png", NULL};
+
+/* volume control commands */
+static const char *sndinput_up[]   = {"sndioctl", "input.level=+.05", NULL};
+static const char *sndinput_down[] = {"sndioctl", "input.level=-.05", NULL};
+static const char *sndinput_mute[] = {"sndioctl", "input.mute=!", NULL};
+
+static const char *sndoutput_up[]   = {"sndioctl", "output.level=+.05", NULL};
+static const char *sndoutput_down[] = {"sndioctl", "output.level=-.05", NULL};
+static const char *sndoutput_mute[] = {"sndioctl", "output.mute=!", NULL};
 
 /*
  * Xresources preferences to load at startup
@@ -194,7 +212,6 @@ ResourcePref resources[] = {
         { "color15",             STRING,  &termcol15},
 };
 
-static const char *vpn_launch[] = { "vpn-connect", "ARGUMENTS", NULL};
 
 #include <X11/XF86keysym.h>
 #include "movestack.c"
@@ -203,11 +220,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,    		            XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd_tmux } },
 
-	{ 0,    		                XK_Print,  spawn,          SHCMD("maim -sl -c .27,.5214,.5333,.8 ~/pictures/screenshots/$(date +%s).png") },
-	{ 0|ShiftMask,                  XK_Print,  spawn,          SHCMD("maim ~/pictures/screenshots/$(date +%s).png") },
+	{ 0,    		                XK_Print,  spawn,          {.v = screenshotcmd1} }, 
+	{ 0|ShiftMask,                  XK_Print,  spawn,          {.v = screenshotcmd2} },
 
-	{ MODKEY,    		            XK_Home, spawn,            {.v = vpn_launch} },
+	{ MODKEY,    		            XK_Home, spawn,            {.v = vpncmd1} },
 	//{ MODKEY,    		            XK_Prior, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_Next, spawn,          {.v = termcmd } },
 	//{ MODKEY,    		            XK_End, spawn,          {.v = termcmd } },
@@ -266,7 +284,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
     { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
     //{ MODKEY,                     XK_bracketright,    <stuff>,          {} },
-    { MODKEY,                     XK_bracketleft,     spawn,          SHCMD("kitty search -y") },
+    { MODKEY,                     XK_bracketleft,     spawn,          SHCMD("st -e search -y") },
     //{ MODKEY,                     XK_backslash,       <stuff>,          {} },
 
     /* Shift with Q - P */
@@ -282,14 +300,14 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,           XK_o,      <stuff>,      {} },
     //{ MODKEY|ShiftMask,           XK_p,      <stuff>,      {} },
     //{ MODKEY|ShiftMask,           XK_bracketright,  <stuff>,     {} },
-    { MODKEY|ShiftMask,           XK_bracketleft,   spawn,     SHCMD("kitty search -y t") },
+    { MODKEY|ShiftMask,           XK_bracketleft,   spawn,     SHCMD("st -e search -y t") },
     //{ MODKEY|ShiftMask,           XK_backslash,     <stuff>,     {} },
     
 
     /* A - L */
-    { MODKEY,                       XK_a,      spawn,          SHCMD("sndioctl output.level=-.05")  },
-    { MODKEY,                       XK_s,      spawn,          SHCMD("sndioctl output.mute=!")  },
-    { MODKEY,                       XK_d,      spawn,          SHCMD("sndioctl output.level=+.05")  },
+    { MODKEY,                       XK_a,      spawn,          { .v = sndoutput_down} },
+    { MODKEY,                       XK_s,      spawn,          { .v = sndoutput_mute} },
+    { MODKEY,                       XK_d,      spawn,          { .v = sndoutput_up} },
     //{ MODKEY,                     XK_f,      <stuff>         {} },
     //{ MODKEY,                     XK_g,      <stuff>         {} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -300,9 +318,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_apostrophe,     spawn,  SHCMD("search") },
 
     /* Shift with A - L */
-    { MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("sndioctl input.level=-.05")  },
-    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("sndioctl input.mute=!")  },
-    { MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("sndioctl input.level=+.05")  },
+    { MODKEY|ShiftMask,             XK_a,      spawn,          {.v = sndinput_down} },
+    { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = sndinput_mute} },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          {.v = sndinput_up} },
     //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
@@ -340,11 +358,11 @@ static Key keys[] = {
 
     /* Function Keys */
     { MODKEY,                       XK_Escape, spawn,           SHCMD("lock")},
-    { MODKEY,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
-    { MODKEY,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
-    { MODKEY,                       XK_F3,     spawn,           SHCMD("pkill newsboat; kitty newsboat -u ~/.local/share/feeds -c ~/.cache/newsboat/cache -C ~/.config/newsboat/config")},
-    { MODKEY,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
-    { MODKEY,                       XK_F5,     spawn,           SHCMD("kitty weechat")},
+    { MODKEY,                       XK_F1,     spawn,           {.v = browsercmd1}},
+    { MODKEY,                       XK_F2,     spawn,           SHCMD("st -e neomutt")},
+    { MODKEY,                       XK_F3,     spawn,           SHCMD("pkill newsboat; st -e newsboat -u ~/.local/share/feeds -c ~/.cache/newsboat/cache -C ~/.config/newsboat/config")},
+    { MODKEY,                       XK_F4,     spawn,           SHCMD("st -e khal interactive")},
+    { MODKEY,                       XK_F5,     spawn,           SHCMD("st -e weechat")},
     { MODKEY,                       XK_F6,     spawn,           SHCMD("")},
 	{ MODKEY,            			XK_F7,     togglescratch,  {.ui = 5 } },
 	{ MODKEY,            			XK_F8,     togglescratch,  {.ui = 4 } },
@@ -356,7 +374,7 @@ static Key keys[] = {
 
     /* Shift with Function Keys */
     { MODKEY|ShiftMask,             XK_Escape, spawn,           SHCMD("toggle-lock")},
-    //{ MODKEY|ShiftMask,                       XK_F1,     spawn,           SHCMD("qutebrowser")},
+    { MODKEY|ShiftMask,             XK_F1,     spawn,           {.v = browsercmd2}},
     //{ MODKEY|ShiftMask,                       XK_F2,     spawn,           SHCMD("kitty neomutt")},
     //{ MODKEY|ShiftMask,                       XK_F3,     spawn,           SHCMD("kitty newsboat -u /home/douglas/.local/share/feeds -c /home/douglas/.cache/newsboat/cache -C /home/douglas/.config/newsboat/config")},
     //{ MODKEY|ShiftMask,                       XK_F4,     spawn,           SHCMD("kitty khal interactive")},
