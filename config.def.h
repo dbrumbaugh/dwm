@@ -72,12 +72,12 @@ typedef struct {
 	const void *cmd;
 } Sp;
 
-const char *spcmd1[] = {"kitty", "--name", "spcalc", "-e", "calc", NULL };
-const char *spcmd2[] = {"kitty", "--name", "spterm",  NULL };
-const char *spcmd3[] = {"kitty", "--name", "spnvim", "-e", "nvim", NULL };
-const char *spcmd4[] = {"kitty", "--name", "spmixer", "-e", "pulsemixer", NULL};
-const char *spcmd5[] = {"kitty", "--name", "spmusic", "-e", "ncmpcpp", NULL};
-const char *spcmd6[] = {"kitty", "--name", "sptop", "-e", "htop", NULL};
+const char *spcmd1[] = {"st", "-n", "spcalc", "-e", "calc", NULL };
+const char *spcmd2[] = {"st", "-n", "spterm",  NULL };
+const char *spcmd3[] = {"st", "-n", "spnvim", "-e", "nvim", NULL };
+const char *spcmd4[] = {"st", "-n", "spmixer", "-e", "pulsemixer", NULL};
+const char *spcmd5[] = {"st", "-n", "spmusic", "-e", "ncmpcpp", NULL};
+const char *spcmd6[] = {"st", "-n", "sptop", "-e", "htop", NULL};
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -85,8 +85,8 @@ static Sp scratchpads[] = {
 	{"spterm",    spcmd2},
 	{"spnvim",    spcmd3},
     {"spmixer",   spcmd4},
-    {"spmusic", spcmd5},
-    {"sptop", spcmd6},
+    {"spmusic",   spcmd5},
+    {"sptop",     spcmd6},
 };
 
 /* tagging */
@@ -98,12 +98,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  		title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Kitty",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      "kitty",     		NULL,		   	0,         0,          1,           0,        -1 },
+	{ "Kitty",   NULL,     		NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      "kitty",   	NULL,		   	0,         0,          1,           0,        -1 },
 	{ "St",      NULL,     		NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      "st",     		NULL,		   	0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     		"Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-	{ NULL,      NULL,     		"zoom",                0,  1,          0,           0,        -1 }, /* xev */
+	{ NULL,      NULL,     		"zoom",         0,         1,          0,           0,        -1 }, /* xev */
 	{ NULL,		 "spcalc",		NULL,			SPTAG(0),  1,		   1,           0,        -1 },
 	{ NULL,		 "spterm",		NULL,			SPTAG(1),  1,		   1,           0,        -1 },
 	{ NULL,		 "spnvim",		NULL,			SPTAG(2),  1,		   1,           0,        -1 },
@@ -177,13 +177,13 @@ static const char *screenshotcmd1[] = {"maim", "-sl",  "-c",  ".27,.5214,.5333,.
 static const char *screenshotcmd2[] = {"maim", "~/pictures/screenshots/$(date +%s).png", NULL};
 
 /* volume control commands */
-static const char *sndoutput_up[]     = {"pamixer", "--allow-boost", "-i3;", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndoutput_down[]   = {"pamixer", "--allow-boost", "-d3;", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndoutput_mute[]   = {"pamixer", "-t;", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndoutput_up[]     = {"pamixer", "--allow-boost", "-i3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndoutput_down[]   = {"pamixer", "--allow-boost", "-d3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndoutput_mute[]   = {"pamixer", "-t", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
 
-static const char *sndinput_up[]     = {"pamixer", "--default-source", "-i3;", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndinput_down[]   = {"pamixer", "--default-source", "-d3;", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndinput_mute[]   = {"pamixer", "--default-source", "-t;", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndinput_up[]     = {"pamixer", "--default-source", "-i3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndinput_down[]   = {"pamixer", "--default-source", "-d3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndinput_mute[]   = {"pamixer", "--default-source", "-t", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
 
 /* feed reader */
 static const char *readercmd[] = { D_TERM, "newsboat", "-u", DATA_HOME "feeds" 
