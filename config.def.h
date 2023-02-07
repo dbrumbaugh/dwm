@@ -177,13 +177,16 @@ static const char *screenshotcmd1[] = {"maim", "-sl",  "-c",  ".27,.5214,.5333,.
 static const char *screenshotcmd2[] = {"maim", "~/pictures/screenshots/$(date +%s).png", NULL};
 
 /* volume control commands */
-static const char *sndoutput_up[]     = {"pamixer", "--allow-boost", "-i3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndoutput_down[]   = {"pamixer", "--allow-boost", "-d3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndoutput_mute[]   = {"pamixer", "-t", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndoutput_up[]     = {"pamixer", "--allow-boost", "-i3", NULL };
+static const char *sndoutput_down[]   = {"pamixer", "--allow-boost", "-d3", NULL };
+static const char *sndoutput_mute[]   = {"pamixer", "-t",NULL };
 
-static const char *sndinput_up[]     = {"pamixer", "--default-source", "-i3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndinput_down[]   = {"pamixer", "--default-source", "-d3", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
-static const char *sndinput_mute[]   = {"pamixer", "--default-source", "-t", ";", "kill", "-44", "$(pidof dwmblocks)", NULL};
+static const char *sndinput_up[]     = {"pamixer", "--default-source", "-i3", NULL };
+static const char *sndinput_down[]   = {"pamixer", "--default-source", "-d3", NULL };
+static const char *sndinput_mute[]   = {"pamixer", "--default-source", "-t", NULL }; 
+
+/* send signal to dwmblocks bar to update volume numbers */
+static const char *snd_update_bar[] = {"pkill", "-44", "dwmblocks", NULL};
 
 /* feed reader */
 static const char *readercmd[] = { D_TERM, "newsboat", "-u", DATA_HOME "feeds" 
@@ -321,8 +324,11 @@ static Key keys[] = {
 
     /* A - L */
     { MODKEY,                       XK_a,      spawn,          {.v=sndoutput_down}},
+    { MODKEY,                       XK_a,      spawn,          {.v=snd_update_bar}},
     { MODKEY,                       XK_s,      spawn,          {.v=sndoutput_mute}},
+    { MODKEY,                       XK_s,      spawn,          {.v=snd_update_bar}},
     { MODKEY,                       XK_d,      spawn,          {.v=sndoutput_up}},
+    { MODKEY,                       XK_d,      spawn,          {.v=snd_update_bar}},
     //{ MODKEY,                     XK_f,      <stuff>         {} },
     //{ MODKEY,                     XK_g,      <stuff>         {} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -334,8 +340,11 @@ static Key keys[] = {
 
     /* Shift with A - L */
     { MODKEY|ShiftMask,             XK_a,      spawn,          {.v=sndinput_down}},
+    { MODKEY|ShiftMask,             XK_a,      spawn,          {.v=snd_update_bar}},
     { MODKEY|ShiftMask,             XK_s,      spawn,          {.v=sndinput_mute}},
+    { MODKEY|ShiftMask,             XK_s,      spawn,          {.v=snd_update_bar}},
     { MODKEY|ShiftMask,             XK_d,      spawn,          {.v=sndinput_up}},
+    { MODKEY|ShiftMask,             XK_d,      spawn,          {.v=snd_update_bar}},
     //{ MODKEY|ShiftMask,           XK_f,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_g,      <stuff>         {} },
     //{ MODKEY|ShiftMask,           XK_h,      <stuff>         {} },
