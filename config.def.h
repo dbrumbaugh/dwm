@@ -111,6 +111,7 @@ static const Rule rules[] = {
 	{ NULL,		 "spmusic",		NULL,			SPTAG(4),  1,		   1,           0,        -1 },
 	{ NULL,		 "sptop",		NULL,			SPTAG(5),  1,		   1,           0,        -1 },
     { NULL,      NULL,          "Gnuplot Window", 0,       0,          0,           1,        -1 },
+    { "prog.py",      NULL,     NULL, 0,       0,          0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -301,7 +302,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
     { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
-    //{ MODKEY,                     XK_bracketleft,     <stuff>,          {} },
+    { MODKEY,                       XK_bracketleft,     spawn, SHCMD("st -e search -y") },
     //{ MODKEY,                     XK_bracketright,    <stuff>,          {} },
     //{ MODKEY,                     XK_backslash,       <stuff>,          {} },
 
@@ -414,10 +415,22 @@ static Key keys[] = {
 
 
     /* XF86 Media Keybindings */
+
+	{ 0, XF86XK_AudioMute,		spawn,		{ .v = sndoutput_mute }},
+	{ 0, XF86XK_AudioMute,		spawn,		{ .v = snd_update_bar }},
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		{ .v = sndoutput_up }},
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		{ .v = snd_update_bar }},
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		{.v = sndoutput_down }},
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		{.v = snd_update_bar }},
+
+	{ 0|ShiftMask, XF86XK_AudioMute,		spawn,		{ .v = sndinput_mute }},
+	{ 0|ShiftMask, XF86XK_AudioMute,		spawn,		{ .v = snd_update_bar }},
+	{ 0|ShiftMask, XF86XK_AudioRaiseVolume,	spawn,		{ .v = sndinput_up }},
+	{ 0|ShiftMask, XF86XK_AudioRaiseVolume,	spawn,		{ .v = snd_update_bar }},
+	{ 0|ShiftMask, XF86XK_AudioLowerVolume,	spawn,		{.v = sndinput_down }},
+	{ 0|ShiftMask, XF86XK_AudioLowerVolume,	spawn,		{.v = snd_update_bar }},
+
     /*
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
