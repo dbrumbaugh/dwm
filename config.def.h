@@ -169,10 +169,12 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "tabbed", "-c", "-n", "tabbed_st", "-r", "2", D_TERM, "-w", "''", NULL}; //"''", "-e", "tmux", "-u", NULL };
 static const char *termcmd_tmux[]  = { "tabbed", "-c", "-n", "tabbed_st", "-r", "2", D_TERM, "-w", "''", "-e", "tmux", "-u", NULL };
 
-static const char *browsercmd1[] = {"tabbed", "-c", D_BROWSER, "-e", NULL};
-static const char *browsercmd2[] = {"qutebrowser", NULL};
+static const char *browsercmd2[] = {"firefox", "--private-window", NULL};
+static const char *browsercmd1[] = {"firefox", NULL};
 
 static const char *vpncmd1[] = { "vpn-connect", NULL};
+
+static const char *suspendcmd[] = { "systemctl", "suspend" };
 
 static const char *screenshotcmd1[] = {"maim", "-sl",  "-c",  ".27,.5214,.5333,.8",  "~/pictures/screenshots/$(date +%s).png", NULL};
 static const char *screenshotcmd2[] = {"maim", "~/pictures/screenshots/$(date +%s).png", NULL};
@@ -302,7 +304,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_i,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[7]} },
     { MODKEY,                       XK_p,      spawn,          SHCMD("toggle-picom")  },
-    { MODKEY,                       XK_bracketleft,     spawn, SHCMD("st -e search -y") },
+    { MODKEY,                       XK_bracketleft,     spawn, SHCMD(D_TERM " -e search -y") },
     //{ MODKEY,                     XK_bracketright,    <stuff>,          {} },
     //{ MODKEY,                     XK_backslash,       <stuff>,          {} },
 
@@ -430,6 +432,7 @@ static Key keys[] = {
 	{ 0|ShiftMask, XF86XK_AudioLowerVolume,	spawn,		{.v = sndinput_down }},
 	{ 0|ShiftMask, XF86XK_AudioLowerVolume,	spawn,		{.v = snd_update_bar }},
 
+	{ 0, XF86XK_Sleep,		spawn,		                {.v = suspendcmd }},
     /*
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
